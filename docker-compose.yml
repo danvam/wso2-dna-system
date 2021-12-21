@@ -1,0 +1,31 @@
+version: '3.3'
+
+networks:
+  local:
+
+services:
+  micro-integrator:
+    container_name: "micro-integrator"
+    image: wso2/wso2mi:4.0.0
+    ports:
+      - "8290:8290"
+      - "8253:8253"
+      - "9164:9164"
+    #environment:
+    #  - JAVA_OPTS="-DenablePrometheusApi=true -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.rmi.port=9010 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=0.0.0.0"
+    #volumes:
+    #  - ./api/Echo.xml:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/synapse-configs/default/api/Echo.xml
+    #  - ./api/Hello.xml:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/synapse-configs/default/api/Hello.xml
+    networks:
+      - local
+  dashboard:
+    container_name: "dashboard"
+    image: wso2/wso2mi-dashboard:4.0.0
+    ports:
+      - "9743:9743"
+    environment:
+      - DASHBOARD_CONFIG_URL=http://micro-integrator:9164
+    networks:
+      - local
+    depends_on:
+      - micro-integrator
