@@ -1,31 +1,69 @@
 version: '3.3'
 
-networks:
-  local:
-
 services:
-  micro-integrator:
-    container_name: "micro-integrator"
+  wso2mi:
+    container_name: wso2mi
+    hostname: wso2mi
     image: wso2/wso2mi:4.0.0
     ports:
-      - "8290:8290"
-      - "8253:8253"
-      - "9164:9164"
-    #environment:
-    #  - JAVA_OPTS="-DenablePrometheusApi=true -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.rmi.port=9010 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=0.0.0.0"
-    #volumes:
-    #  - ./api/Echo.xml:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/synapse-configs/default/api/Echo.xml
-    #  - ./api/Hello.xml:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/synapse-configs/default/api/Hello.xml
+      - 8290:8290
+      - 8253:8253
+      - 9164:9164
     networks:
-      - local
-  dashboard:
-    container_name: "dashboard"
+      - dnasport
+    volumes: 
+      - ${WSO2_MI_CUSTOM}:/home/wso2carbon/shared
+      - ${WSO2_MI_ENTRY_POINT}/wso2mi-entry-point.sh:/home/wso2carbon/wso2mi-entrypoint.sh
+    entrypoint: 
+      - /home/wso2carbon/wso2mi-entrypoint.sh 
+    depends_on:
+      - wso2database
+  wso2mi-dashboard:
+    container_name: wso2mi-dashboard
+    hostname: wso2mi-dashboard
     image: wso2/wso2mi-dashboard:4.0.0
     ports:
-      - "9743:9743"
+      - 9743:9743
     environment:
-      - DASHBOARD_CONFIG_URL=http://micro-integrator:9164
+      - DASHBOARD_CONFIG_URL=http://wso2mi:9164
     networks:
-      - local
+      - dnasport
     depends_on:
-      - micro-integrator
+      - wso2mi
+  wso2is:
+    image: wso2/wso2is:5.11.0
+    container_name: wso2is
+    hostname: wso2is
+    ports:
+      - 9443:9443
+    networks:
+      - dnasport
+    volumes: 
+      - ${WSO2_IS_CUSTOM}:/home/wso2carbon/shared
+      - ${WSO2_IS_ENTRY_POINT}/wso2is-entry-point.sh:/home/wso2carbon/wso2is-entrypoint.sh
+    entrypoint: 
+      - /home/wso2carbon/wso2is-entrypoint.sh 
+    depends_on:
+      - wso2database
+  wso2database:
+    image: mariadb:10.6.5
+    container_name: wso2database
+    hostname: wso2database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+       - "3306:3306"
+    networks:
+       - dnasport
+    volumes:
+      - mariadb_data:/var/lib/mysql
+networks:
+  dnasport:
+    driver: bridge
+volumes:
+  mariadb_data:
+    external: false
+  wso2mi_carbonapps:
+    external: false
+  wso2is_carbonapps:
+    external: false
