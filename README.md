@@ -1,4 +1,4 @@
-# wso2ei-ecosystem
+# wso2-dna-system
 
 **Docker User**
 
