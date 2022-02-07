@@ -1,7 +1,11 @@
 [server]
-hostname = "localhost"
+hostname = "wso2is"
+internal_hostname = "wso2is"
 node_ip = "127.0.0.1"
 base_path = "https://$ref{server.hostname}:${carbon.management.port}"
+
+[admin_service.wsdl] 
+enable = true
 
 [super_admin]
 username = "admin"
@@ -9,11 +13,11 @@ password = "admin"
 create_admin_account = true
 
 [user_store]
-type = "read_write_ldap_unique_id"
-connection_url = "ldap://localhost:${Ports.EmbeddedLDAP.LDAPServerPort}"
-connection_name = "uid=admin,ou=system"
-connection_password = "admin"
-base_dn = "dc=wso2,dc=org"      #refers the base dn on which the user and group search bases will be generated
+type = "database_unique_id"
+#connection_url = "ldap://localhost:${Ports.EmbeddedLDAP.LDAPServerPort}"
+#connection_name = "uid=admin,ou=system"
+#connection_password = "admin"
+#base_dn = "dc=wso2,dc=org"      #refers the base dn on which the user and group search bases will be generated
 
 [database.identity_db]
 type = "mysql"
@@ -26,6 +30,15 @@ type = "mysql"
 url = "jdbc:mysql://wso2database:3306/regdb"
 username = "regadmin"
 password = "regadmin"
+
+[database.user]
+url = "jdbc:mysql://wso2database:3306/regdb?useSSL=false"
+username = "regadmin"
+password = "regadmin"
+type = "mysql"
+
+[realm_manager]
+data_source = "WSO2USER_DB"
 
 [keystore.primary]
 file_name = "wso2carbon.jks"

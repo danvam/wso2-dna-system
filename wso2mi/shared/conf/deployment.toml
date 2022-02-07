@@ -1,9 +1,13 @@
 [server]
 hostname = "localhost"
 # offset  = 10
+auth2_token_validation_service = "https://wso2is:9443/oauth2/introspect"
+identity_server_username = "admin"
+identity_server_password = "admin"
 
 [user_store]
 type = "read_only_ldap"
+
 
 [keystore.primary]
 file_name = "repository/resources/security/wso2carbon.jks"
@@ -16,6 +20,9 @@ file_name = "repository/resources/security/client-truststore.jks"
 password = "wso2carbon"
 alias = "symmetric.key.value"
 algorithm = "AES"
+
+[transport.passthru_https.sender.parameters]
+HostnameVerifier = "AllowAll"
 
 ## Following are set of example configs. Please refer docs for complete set of configurations.
 
@@ -146,3 +153,15 @@ dashboard_url = "https://wso2mi-dashboard:9743/dashboard/api/"
 heartbeat_interval = 5
 group_id = "mi_dev"
 node_id = "dev_node_2"
+
+# [[transport.parameters]]
+# name = "oauth2TokenValidationService"
+# value = "https://wso2is:9443/services/OAuth2TokenValidationService"
+
+# [[transport.parameters]]
+# name = "identityServerUserName"
+# value = "admin"
+
+# [[transport.parameters]]
+# name = "identityServerPw"
+# value = "admin"

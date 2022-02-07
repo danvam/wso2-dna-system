@@ -5,12 +5,11 @@ services:
     container_name: wso2mi
     hostname: wso2mi
     image: wso2/wso2mi:4.0.0
-    restart: unless-stopped
     links:
       - wso2is   
       - wso2database  
     ports:
-      - 8290:8290
+      - 8480:8290
       - 8253:8253
       - 9164:9164
     networks:
@@ -27,9 +26,8 @@ services:
     container_name: wso2mi-dashboard
     hostname: wso2mi-dashboard
     image: wso2/wso2mi-dashboard:4.0.0
-    restart: unless-stopped
     ports:
-      - 9743:9743
+      - 9943:9743
     environment:
       - DASHBOARD_CONFIG_URL=http://wso2mi:9164
     networks:
@@ -42,9 +40,8 @@ services:
     image: wso2/wso2is:5.11.0
     container_name: wso2is
     hostname: wso2is
-    restart: unless-stopped
     ports:
-      - 9443:9443
+      - 9644:9443
     networks:
       - dnasport
     volumes: 
@@ -61,7 +58,6 @@ services:
     image: mariadb:10.6.5
     container_name: wso2database
     hostname: wso2database
-    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:

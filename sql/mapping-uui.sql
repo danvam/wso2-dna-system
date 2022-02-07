@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS dnasport; 
+
+CREATE USER IF NOT EXISTS 'dnasport' IDENTIFIED BY 'dnasport';
+
+GRANT ALL privileges ON dnasport.* TO 'dnasport'@'%';
+
+USE dnasport;
+
+CREATE TABLE IF NOT EXISTS USER_UID (
+             USER_ID VARCHAR (250) NOT NULL,
+             UID VARCHAR (250) NOT NULL,
+             PRIMARY KEY (USER_ID)
+)ENGINE INNODB;
+
+CREATE TABLE IF NOT EXISTS H_USER_UID (
+             USER_ID VARCHAR (250) NOT NULL,
+             UID VARCHAR (250) NOT NULL,
+             MOD_DATE DATETIME not null,
+             PRIMARY KEY (USER_ID, MOD_DATE)
+)ENGINE INNODB;

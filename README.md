@@ -69,3 +69,26 @@ Reiniciar docker si no se ha reiniciado la máquina.
 sudo /etc/init.d/docker restart
 `
 
+
+desplegar apps:
+
+docker cp carbonapps/dnasport_1.0-SNAPSHOT.car wso2mi:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/carbonapps
+
+
+renovar certificado para comunicación mi --> is
+
+> keytool -delete -alias "wso2carbon" -keystore wso2carbon.jks
+
+> keytool -genkey -alias wso2carbon -keyalg RSA -keysize 2048 -keystore wso2carbon.jks -dname "CN=wso2is, OU=Is,O=Wso2,L=SL,S=WS,C=LK" -storepass wso2carbon -keypass wso2carbon
+
+> keytool -export -alias wso2carbon -keystore wso2carbon.jks -file wso2carbon.pem
+
+> keytool -delete -alias "wso2carbon" -keystore client-truststore.jks
+
+> keytool -import -alias wso2carbon -file wso2carbon.pem -keystore client-truststore.jks -storepass wso2carbon
+
+> docker cp security/client-truststore.jks wso2is:/home/wso2carbon/wso2is-5.11.0/repository/resources/security/
+
+> docker cp security/wso2carbon.jks wso2is:/home/wso2carbon/wso2is-5.11.0/repository/resources/security/
+
+> docker cp security/client-truststore.jks wso2mi:/home/wso2carbon/wso2mi-4.0.0/repository/resources/security/
