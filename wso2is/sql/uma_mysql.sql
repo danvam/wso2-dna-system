@@ -1,3 +1,7 @@
+create database if not exists regdb character set latin1;
+
+use regdb;
+
 CREATE TABLE IF NOT EXISTS IDN_UMA_RESOURCE (
   ID                  INTEGER AUTO_INCREMENT NOT NULL,
   RESOURCE_ID         VARCHAR(255),

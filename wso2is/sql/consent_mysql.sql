@@ -1,3 +1,7 @@
+create database if not exists regdb character set latin1;
+
+use regdb;
+
 CREATE TABLE CM_PII_CATEGORY (
   ID           INTEGER AUTO_INCREMENT,
   NAME         VARCHAR(255) NOT NULL,

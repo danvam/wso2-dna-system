@@ -1,3 +1,7 @@
+create database if not exists regdb character set latin1;
+
+use regdb;
+
 CREATE TABLE IF NOT EXISTS REG_CLUSTER_LOCK (
              REG_LOCK_NAME VARCHAR (20),
              REG_LOCK_STATUS VARCHAR (20),

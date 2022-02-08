@@ -1,3 +1,7 @@
+create database if not exists regdb character set latin1;
+
+use regdb;
+
 CREATE TABLE IF NOT EXISTS IDN_BASE_TABLE (
             PRODUCT_NAME VARCHAR(20),
             PRIMARY KEY (PRODUCT_NAME)

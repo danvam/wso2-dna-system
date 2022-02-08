@@ -1,3 +1,8 @@
+create database userdb character set latin1;
+
+use userdb;
+
+
 CREATE TABLE UM_TENANT
 (
     UM_ID           INTEGER      NOT NULL AUTO_INCREMENT,

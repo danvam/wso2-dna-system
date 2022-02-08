@@ -1,3 +1,7 @@
+create database clusterdb character set latin1;
+
+use clusterdb;
+
 CREATE TABLE IF NOT EXISTS LEADER_STATUS_TABLE (
   GROUP_ID VARCHAR (512) NOT NULL,
   NODE_ID VARCHAR (512) NOT NULL,
