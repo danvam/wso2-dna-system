@@ -23,33 +23,6 @@ services:
       - /home/wso2carbon/wso2mi-entrypoint.sh 
     depends_on:
       - wso2database
-    deploy:
-      resources:
-        limits:
-          memory: 2000M
-        reservations:
-          memory: 1000M  
-  wso2mi-dashboard:
-    container_name: wso2mi-dashboard
-    hostname: wso2mi-dashboard
-    image: wso2/wso2mi-dashboard:4.0.0
-    restart: unless-stopped
-    ports:
-      - 9743:9743
-    environment:
-      - DASHBOARD_CONFIG_URL=http://wso2mi:9164
-    networks:
-      - dnasport
-    depends_on:
-      - wso2mi
-    links:
-      - wso2mi  
-    deploy:
-      resources:
-        limits:
-          memory: 2000M
-        reservations:
-          memory: 1000M   
   wso2is:
     image: wso2/wso2is:5.11.0
     container_name: wso2is
@@ -68,13 +41,7 @@ services:
     depends_on:
       - wso2database
     links:
-      - wso2database 
-    deploy:
-      resources:
-        limits:
-          memory: 2000M
-        reservations:
-          memory: 1000M  
+      - wso2database
   wso2database:
     image: mariadb:10.6.5
     container_name: wso2database
@@ -88,12 +55,6 @@ services:
        - dnasport
     volumes:
       - mariadb_data:/var/lib/mysql
-    deploy:
-      resources:
-        limits:
-          memory: 2000M
-        reservations:
-          memory: 1000M  
 networks:
   dnasport:
     driver: bridge
