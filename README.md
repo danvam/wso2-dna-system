@@ -69,8 +69,26 @@ Reiniciar docker si no se ha reiniciado la máquina.
 sudo /etc/init.d/docker restart
 `
 
+**ejecutar scripts la primera vez**
 
-desplegar apps:
+permisos.sql
+
+is
+
+1. identity_mysql.sql
+2. uma_mysql.sql
+3. consent_mysql.sql
+4. mysql.sql
+
+mi
+
+1. mysql_cluster.sql
+2. mysql_user.sql
+3. mysql_transaction_count.sql
+
+
+
+**desplegar apps:**
 
 docker cp carbonapps/dnasport_1.0-SNAPSHOT.car wso2mi:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/carbonapps
 

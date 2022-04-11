@@ -10,7 +10,7 @@ services:
       - wso2is   
       - wso2database  
     ports:
-      - 8290:8290
+      - 8280:8290
       - 8253:8253
       - 9164:9164
     networks:
@@ -23,6 +23,20 @@ services:
       - /home/wso2carbon/wso2mi-entrypoint.sh 
     depends_on:
       - wso2database
+  wso2mi-dashboard:
+    container_name: wso2mi-dashboard
+    hostname: wso2mi-dashboard
+    image: wso2/wso2mi-dashboard:4.0.0
+    ports:
+      - 9943:9743
+    environment:
+      - DASHBOARD_CONFIG_URL=http://wso2mi:9164
+    networks:
+      - dnasport
+    depends_on:
+      - wso2mi
+    links:
+      - wso2mi   
   wso2is:
     image: wso2/wso2is:5.11.0
     container_name: wso2is
