@@ -28,7 +28,7 @@ services:
     hostname: wso2mi-dashboard
     image: wso2/wso2mi-dashboard:4.0.0
     ports:
-      - 9943:9743
+      - 9743:9743
     environment:
       - DASHBOARD_CONFIG_URL=http://wso2mi:9164
     networks:
